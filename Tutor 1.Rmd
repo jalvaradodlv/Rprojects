@@ -1,0 +1,219 @@
+# Tutoriales de R para estadística
+LMA. Wilfrido Jacobo Paredes G.
+
+## Primer tutorial de R
+
+### Conoce a R.
+
+Una vez que haya instalado R y RStudio, deberá abrir RStudio. Rstudio es una caratula para R que tiene la siguiente apariencia:
+
+![Resumen de supuestos](rstudio.PNG)
+
+- La parte encerrada en negro es la **Barra de estado** es una barra muy común en la mayoría de los programas. De clic en *File*, luego *New File* y luego de clic en *R Script*
+- La parte azul es la parte de scripts, un script es un archivo de R donde usted escribe sus instrucciones y no se ejecutarán hasta que usted lo ordene. Cada script aparecerá en una pestaña de manera individual.
+- La parte en verde es la consola, en la consola usted puede escribir instrucciones, una a la vez o varias separadas por un punto y coma (;) que al presionar INTRO se ejecutaran. En la consola además aparece el resultado de lo que usted ordene ya sea por la consola o usando un script.
+- La parte amarilla contiene dos pestañas; *Enviroment* que contiene todas las variables guardadas y funciones creadas, y *History* que contiene un histórico de todas las ordenes ejecutadas.
+- Finalamente la parte roja contiene 5 pestañas: Files, Plots, Packages, Help y Viewer. De momento nos concentraremos en **Plots**, cada que pida una gráfica ahí aparecera.
+
+### R funciona como calculadora
+
+R puede realizar operaciones aritméticas tan sencillas como
+```{r}
+2+2 # + se usa para suma
+2-2 # - se usa para resta
+2*3 # * se usa para multiplicación
+2/3 # / se usa para división
+```
+Además puede realizar una varias funciones disponibles en su calculadora por ejemplo
+```{r}
+sqrt(25) #Raíz cuadrada de 25
+2^8 #Se entiende como 2x2x2x2x2x2x2x2
+exp(2) #Se entiende como e^2
+log(4) #Logaritmo natural de 4
+log10(100) #Logaritmo base 10 de 100
+log2(8) #Logaritmo base 2 de 8
+sin(5) #Seno de 5 (Ojo: ángulos en radianes siempre)
+cos(3) #Coseno de 3
+tan(6) #Tangente 6
+asin(1) #Arco seno de 1 radian
+acos(0.5) #Arco coseno de 0.5 radianes
+atan(0.3) #Arco tangente de 0.3 radianes
+factorial(5) #Se entiende como 5!, es decir, factorial de 5.
+```
+
+Sin embargo, R como toda calculadora respeta el orden de las operaciones:
+
+```{r}
+2+4*4 #El resultado será 18, porque la multiplicación es primero que la suma.
+(2+4)*4 #Si se quiere que haga primero la suma se deberá usar parentesis. 
+```
+En general el orden de operaciones es el siguiente:
+
+- Primero se realiza lo que está dentro del parentesis.
+- Segundo exponentes
+- Tercero todas las multiplicaciones y divisiones.
+- Cuarto todas las sumas y restas
+
+### R guarda valores (Asignación)
+
+R no solo es una simple calculadora también puede guardar información. Por ejemplo
+
+```{r}
+x <- 2 #Guardamos en una variable de nombre x el valor de 2
+```
+La forma de asignar es usando <- de esta manera se dice que a x le corresponde (<-) el valor de 2. Así, esa variable ya puede ser usada para hacer operaciones o mostrar el resultado
+```{r}
+x #Se muestra el valor de x
+x+x #Sumamos lo que esté en x con lo que esté en x
+```
+Pero no necesariamente tiene que usar letras puede usar nombres por ejemplo
+```{r}
+mi.valor <- log(19) #Guardo el valor de logaritmo natutal de 19 en una variable de nombre mi.valor
+mi.valor + mi.valor
+```
+R tiene una lista de letras y nombres que no se pueden usar, por ejemplo
+
+- F mayúscula está reservado para FALSE.
+- T mayúscula está reservado para TRUE.
+- t, c, q, C, D, diff, pt, dt son ejemplos de otras letras que es recomendado no usar.
+
+### Mi variable puede tener muchos datos
+
+R puede asignar a una variable una lista de datos. Usando la función *c()* y el comando de asignación. El uso de la función como todas las funciones de R que se verán a lo largo del curso requieren cierta información dentro de los parentesis. En el caso de la función c(), ésta requiere los datos de forma que
+
+c(dato1,dato2,dato3,dato4,dato5)
+
+es una forma de crear una lista de datos. En R ese tipo de listas se llama **Vector**
+
+```{r}
+mis.datos <- c(60,72,57,90,95,74) #Asigno mi lista con 6 datos
+mis.datos #Muestro mis datos
+```
+
+### R es una calculadora que puede trabajar con vectores
+
+R es aún más potente que una calculadora convencional, si se quisiera sumar 2 unidades a mi lista, se podría hacer de manera manual
+```{r}
+mis.datos <- c(62,74,59,92,97,76) #Asigno mi lista con 6 datos
+mis.datos #Muestro mis datos
+```
+Sin embargo si tuviera muchos datos, le sería tardado. Sin embargo R es más que una simple calculadora y si usted quisiera sumarle 2 a su vector entonces basta con escribir
+
+```{r}
+mis.datos + 2 #Muestro el valor sumar 2 a cada uno de los datos de la variable mis.datos
+cos(mis.datos) # Cualquier función de las mencionadas al principio puede trabajar con vectores, por ejemplo coseno de su variable le arrojará una lista con el coseno de cada uno de sus datos.
+mis.datos.2 <- mis.datos + 2 #Recuerde que puedo guardar mi operación en una variable nueva o en la misma.
+mis.datos.2 #Muestro lo guardado en mis.datos.2
+
+```
+Sin embargo el poder de R no termina allí, imagine que quiere sumar el valor de la primera columna de la siguiente tabla con su valor correspondiente en la segunda
+
+|Tiempo (días)|Distancia (miles de metros)|
+|-------------|---------------------------|
+|     4.5     |           12.6            |
+|     3.4     |           11.6            |
+|     5.6     |            6.8            |
+|     3.7     |            9.2            |
+
+Entonces lo primero es guardar en una variable una lista con la primera columna y en otra variable lo contenido en la segunda columna.
+
+```{r}
+tiempo <- c(4.5,3.4,5.6,3.7)
+distancia <- c(12.6,11.6,6.8,9.2)
+
+```
+
+Y después simplemente hago la operación
+
+```{r}
+distancia + tiempo #El resultado es una lista con la suma 1 a 1 de los elementos de cada una de las listas.
+distancia * tiempo #El resultado es una lista con la multiplicación 1 a 1 de los elementos de cada una de las listas.
+distancia / tiempo #El resultado es una lista con la división 1 a 1 de los elementos de cada una de las listas.
+```
+
+#### Dos operaciones con los vectores
+
+Hay dos funciones muy útiles que se pueden hacer de manera automática en R. La primera es sumar todos los elementos de un vector. Para ello es necesario emplear la función *sum()*. La función sum() requiere una variable con un vector guardado o un vector de manera explícita dentro de los parentesis. Por ejemplo para sumar todo lo contenido en la variable tiempo se puede hacer
+
+```{r}
+sum(tiempo)
+```
+
+o de manera explícita
+
+```{r}
+sum(c(4.5,3.4,5.6,3.7))
+```
+
+La segunda es calcular la cantidad de elementos en un vector. Para ello es necesario la función *length()*. La función length() requiere una variable con un vector guardado o un vector de manera explícita dentro de los parentesis. Por ejemplo para saber el número de elementos contenidos en la variable tiempo se puede hacer
+
+```{r}
+length(tiempo) 
+```
+
+o de manera explícita
+
+```{r}
+length(c(4.5,3.4,5.6,3.7))
+```
+
+Estas dos funciones ayudan si uno quisiera calcular el promedio del tiempo, el promedio está dado por
+
+$$\bar{x} = \frac{1}{n}\sum_{i=1}^{n}x_{i}$$
+
+es decir, el promedio de un vector con 9 datos es la suma de los elementos del vector dividido entre el número de elementos que posee. Así el promedio de la variable tiempo es
+
+```{r}
+sum(tiempo)/length(tiempo) #Promedio del tiempo: La suma de los elementos del vector dividido entre el número de elementos que posee. 
+```
+
+### Una gráfica simple
+
+El la función *plot()* en R es una función muy vérsatil. Sin embargo una manera simple de usarla es mediante *plot(x,y)* donde x debe ser sustituido por el nombre del vector que quiere se se use como eje x, e y debe ser sustituido por el nombre del vector que se quiere que se use como eje y. *Ojo: La cantidad de elementos de lo que quiere usar como x debe ser la misma de lo que quiere usar en y*. Por ejemplo para gráfica el tiempo y la distancia tendría que hacer
+
+```{r}
+plot(tiempo,distancia)
+```
+
+###Actividad
+
+- Reuna 10 datos sobre algo de su interés 2 listas de datos numéricos de su interés, por ejemplo: La edad y el peso de alguien, la duración de una canción y su gusto por ella, la cantidad de hojas que hay debajo de cierto árbol y la hora del día (usando un numero para la hora, es decir, 9:00 = 9, y 9:30 = 9.5).
+
+- Guarde cada una de sus listas en una variable. Elija un nombre original para ellas.
+
+- Elija 4 operaciones de la lista de funciones del principio y calcule el valor de esa función para cada uno de sus datos. Anote la operación de manera individual que realiza.
+
+- La desviación estándar de una lista de datos (vector) se define como
+
+$$ \frac{\sqrt{\sum_{i=1}^{n}( x_{i} - \bar{x} )^{2}}}{\sqrt{n-1}}$$
+
+Interprete la formulua y calcule la desviación estándar para sus dos listas. *Pista: Primero calcule el promedio y guárdelo en una nueva variable.*
+
+- Use *plot()* para hacer una gráfica de sus dos listas.
+
+- Cree un documento entregable de Word donde describa que datos recolecto. Las operaciones que realizó, su promedio y desviación estándar, y su gráfica. Por ejemplo:
+
+Se reunieron 4 datos sobre la edad y tamaño de pies de mis compañeros. Estos fueron:
+
+|Variable 1   |Variable 2                 |
+|-------------|---------------------------|
+|     Obs. 1  |           Obs. 1          |
+|     Obs. 2  |           Obs. 2          |
+|     Obs. 3  |           Obs. 3          |
+|     Obs. 4  |           Obs. 4          |
+
+se le decidió aplicar coseno, exponencial, raíz cuadrada y logaritmo a mi variable  1 y se obtuvo:
+
+- Resultados de coseno:
+- Resultados de exponencial:
+- Resultados de raíz cuadrada:
+- Resultados de logaritmo:
+
+además
+
+- El promedio de mi variable 1 es XXXXX y su desviación estándar es XXXXX
+- El promedio de mi variable 2 es XXXXX y su desviación estándar es XXXXX
+
+Y la gráfica de mi variable 1 como eje x y mi variable 2 como eje y es:
+
+INSERTE IMAGEN.
