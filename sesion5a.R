@@ -71,6 +71,7 @@ print(modelos %>% map(summary) %>% map_dbl(~.$r.squared))
 ###Manipulando modelos
 library(modelr)
 library(tibble)
+set.seed(10)
 
 mi_x <- rep(seq(2, 10, 0.3), 3)
 n <- length(mi_x)
@@ -117,8 +118,25 @@ evaluate_model <- function(b0, b1){
 modelos_posibles <- modelos_posibles %>% mutate(
 evaluacion = map2_dbl(b0, b1, evaluate_model))
 
+modelos_posibles <- modelos_posibles %>% arrange(evaluacion)
 head(modelos_posibles)
 
+best_model <- lm(y ~ x, data = datos, x = TRUE, y = TRUE)
+cfs <- coef(best_model)
+
+grid <- datos %>% data_grid(x)
+grid <- grid %>% add_predictions(best_model)
+grid <- grid %>% rename(y = pred)
+grid <- grid %>% add_residuals(best_model)
+
+head(grid)
+
+mejor_modelo <- datos %>% ggplot(aes(x = x, y = y))
+mejor_modelo  <- mejor_modelo  + geom_point()
+mejor_modelo  <- mejor_modelo  + geom_abline(
+aes(intercept = cfs[1],slope = cfs[2]))
+
+ggsave('best_model.png', mejor_modelo)
 
 
 
