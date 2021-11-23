@@ -5,6 +5,11 @@ fluidPage(
       min = 1,
       max = 20,
       value = 5),
+  
+  selectInput(inputId = "poly_degree",
+  label = "Selecciona el grado del polinomio",
+  choices = c(1,2,3,4),
+  selected = 1),
 
   checkboxInput(inputId = "model_check",
       label = strong("Mostrar modelo"),
